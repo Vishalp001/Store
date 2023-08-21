@@ -73,10 +73,11 @@
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
+  align-items: center;
 }
 
 .product-card button {
-  background-color: #007bff;
+  background-color: #fb641b;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -85,4 +86,19 @@
 }
 .product-card .buyButton {
   background-color: green;
+}
+.product-card .goToCartBtn {
+  background-color: #ff9f00;
+}
+
+.heart-icon {
+  font-size: 24px;
+  margin-right: 10px;
+  cursor: pointer;
+  color: #e74c3c;
+  transition: color 0.3s;
+
+  &.fas {
+    color: #e74c3c;
+  }
 }

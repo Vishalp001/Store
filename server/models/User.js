@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
     isActive: {type: Boolean, default: true},
     isAdmin: {type: Boolean, default: false},
     orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
+    likedProducts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
   },
   {timestamps: true}
 );

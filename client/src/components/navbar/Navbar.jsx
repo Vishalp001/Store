@@ -18,6 +18,7 @@ const Navbar = () => {
   const keysToRemove = ['user'];
   const handleLogout = () => {
     state.setisLoggedIn(false);
+    state.setUser({});
     removeItemsFromLocalStorage(keysToRemove);
   };
 

@@ -5,6 +5,7 @@ import Cart from '../components/cart/Cart';
 import {useGlobalState} from '../store/global.ts';
 import {Axios} from '../Utility';
 import {useEffect} from 'react';
+import {setKeyToLocalStorage} from '../helpers/common';
 
 const Product = ({showProduct}) => {
   const state = useGlobalState();
@@ -45,12 +46,9 @@ const Product = ({showProduct}) => {
         };
         const updatedData = await Axios.post(`/cart`, newItem);
 
-        // state.setApiResponseData(updatedData.data);
-
         state.setApiResponseData((prevData) => [...prevData, updatedData.data]);
 
         setCartItems(state.getApiResponseData().value);
-        // console.log(allCartItem, 'Updated cart');
       } catch (error) {
         console.log(error);
       }
@@ -58,11 +56,47 @@ const Product = ({showProduct}) => {
     }
   };
 
-  // console.log(cartItems, 'Updated cart');
-
   // Close the cart
   const handleCloseCart = () => {
     setCartOpen(false);
+  };
+
+  const userData = state.getUser();
+  const normalUserData = JSON.parse(JSON.stringify(userData.value));
+
+  const handleLike = async (productID, action) => {
+    if (!isUser) {
+      navigate('/login');
+    } else {
+      try {
+        const userId = state.getUser().value?._id;
+        const productId = productID;
+
+        const response = await Axios.post(
+          `/product/like/${productId}?action=${action}`,
+          {userId}
+        );
+
+        if (response.status === 200) {
+          const updatedLikedProducts = [...normalUserData.likedProducts];
+
+          if (action === 'like') {
+            updatedLikedProducts.push(productId);
+          } else if (action === 'dislike') {
+            const index = updatedLikedProducts.indexOf(productId);
+            if (index !== -1) {
+              updatedLikedProducts.splice(index, 1);
+            }
+          }
+          // Update the user's likedProducts array
+          normalUserData.likedProducts = updatedLikedProducts;
+          setKeyToLocalStorage('user', normalUserData);
+          state.setUser(normalUserData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -90,16 +124,23 @@ const Product = ({showProduct}) => {
             <div className='buttons'>
               <button className='buyButton'>Buy Now</button>
               {cartItems?.some((cartItem) => cartItem?.product === item._id) ? (
-                <button>Item Added to Cart</button>
+                <button className='goToCartBtn'>Go to Cart</button>
               ) : (
                 <button onClick={() => handleAddToCart(item._id)}>
                   Add to Cart
                 </button>
               )}
-
-              {/* <button onClick={() => handleAddToCart(item._id)}>
-                Add to Cart
-              </button> */}
+              <div className='likeBtn'>
+                {normalUserData?.likedProducts?.includes(item._id) ? (
+                  <i
+                    className='heart-icon fas fa-heart'
+                    onClick={() => handleLike(item._id, 'dislike')}></i>
+                ) : (
+                  <i
+                    onClick={() => handleLike(item._id, 'like')}
+                    className='heart-icon far fa-heart'></i>
+                )}
+              </div>
             </div>
           </div>
         ))}
