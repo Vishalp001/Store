@@ -3,7 +3,6 @@ import {AiOutlineClose, AiOutlineDelete} from 'react-icons/ai';
 import './cart.scss';
 import {Axios} from '../../Utility';
 import {useGlobalState} from '../../store/global.ts';
-import {useNavigate} from 'react-router-dom';
 import {udateCartItem} from '../../services/apis';
 
 const Cart = ({handleCloseCart}) => {

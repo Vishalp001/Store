@@ -6,6 +6,7 @@ import {useGlobalState} from '../store/global.ts';
 import {Axios} from '../Utility';
 import {useEffect} from 'react';
 import {setKeyToLocalStorage} from '../helpers/common';
+import {Toaster, toast} from 'react-hot-toast';
 
 const Product = ({showProduct}) => {
   const state = useGlobalState();
@@ -20,7 +21,7 @@ const Product = ({showProduct}) => {
     // Fetch initial data from the state or wherever it comes from
     const fetchInitialData = async () => {
       try {
-        const initialData = await state.getApiResponseData(); // Replace with the correct method to fetch data
+        const initialData = await state.getApiResponseData();
         setCartItems(initialData.value);
       } catch (error) {
         console.log(error);
@@ -45,6 +46,15 @@ const Product = ({showProduct}) => {
           user: state.getUser().value._id,
         };
         const updatedData = await Axios.post(`/cart`, newItem);
+
+        if (updatedData.status === 201) {
+          toast.success('Item added to your Cart.', {
+            style: {
+              background: '#333',
+              color: '#fff',
+            },
+          });
+        }
 
         state.setApiResponseData((prevData) => [...prevData, updatedData.data]);
 
@@ -81,12 +91,24 @@ const Product = ({showProduct}) => {
           const updatedLikedProducts = [...normalUserData.likedProducts];
 
           if (action === 'like') {
+            toast.success('Added to your Wishlist.', {
+              style: {
+                background: '#333',
+                color: '#fff',
+              },
+            });
             updatedLikedProducts.push(productId);
           } else if (action === 'dislike') {
             const index = updatedLikedProducts.indexOf(productId);
             if (index !== -1) {
               updatedLikedProducts.splice(index, 1);
             }
+            toast.success('Removed from your Wishlist', {
+              style: {
+                background: '#333',
+                color: '#fff',
+              },
+            });
           }
           // Update the user's likedProducts array
           normalUserData.likedProducts = updatedLikedProducts;
@@ -101,49 +123,55 @@ const Product = ({showProduct}) => {
 
   return (
     <>
+      <Toaster position='bottom-center' />
       <div className='cartPopup'>
         <div>{isCartOpen && <Cart handleCloseCart={handleCloseCart} />}</div>
       </div>
-      <div className='productMain'>
-        {showProduct.map((item) => (
-          <div key={item._id} className='product-card'>
-            <div>
-              <Link to={`product/${item._id}`}>
-                <img src={item?.images[0]} alt='img' />
-                <div className='category'>{item.category}</div>
-                <div className='description'>
-                  {item.description.slice(0, 150)}
+      <div className='productContainer'>
+        <div className='productMain'>
+          {showProduct?.map((item) => (
+            <div key={item._id} className='product-card'>
+              <div className='producImage'>
+                <img className='dealImage' src={item?.images[0]} alt='img' />
+                <div className='product-wishlist'>
+                  {normalUserData?.likedProducts?.includes(item._id) ? (
+                    <i
+                      className='heart-icon fas fa-heart'
+                      onClick={() => handleLike(item._id, 'dislike')}></i>
+                  ) : (
+                    <i
+                      onClick={() => handleLike(item._id, 'like')}
+                      className='heart-icon far fa-heart'></i>
+                  )}
                 </div>
-              </Link>
-              <div className='price'>{item.price}</div>
-              {/* <div className='rating'>{item.rating.rate}</div> */}
-              <Link to={`product/${item._id}`}>
-                <div className='title'>{item.productName}</div>
-              </Link>
-            </div>
-            <div className='buttons'>
-              <button className='buyButton'>Buy Now</button>
-              {cartItems?.some((cartItem) => cartItem?.product === item._id) ? (
-                <button className='goToCartBtn'>Go to Cart</button>
-              ) : (
-                <button onClick={() => handleAddToCart(item._id)}>
-                  Add to Cart
-                </button>
-              )}
-              <div className='likeBtn'>
-                {normalUserData?.likedProducts?.includes(item._id) ? (
-                  <i
-                    className='heart-icon fas fa-heart'
-                    onClick={() => handleLike(item._id, 'dislike')}></i>
-                ) : (
-                  <i
-                    onClick={() => handleLike(item._id, 'like')}
-                    className='heart-icon far fa-heart'></i>
-                )}
+              </div>
+              <div className='productContent'>
+                <Link to={`/product/${item._id}`}>
+                  <div className='product-title-wrap'>
+                    <h3 className='product-title'>{item.productName}</h3>
+                    <div className='product-price'>
+                      <span className='text-span'>₹</span>
+                      {item.price}
+                      <span className='text-span'>.00</span>
+                    </div>
+                  </div>
+                  <div className='product-color'>{item.description}</div>
+                </Link>
+                <div className='btn-wrapper'>
+                  {cartItems?.some(
+                    (cartItem) => cartItem?.product === item._id
+                  ) ? (
+                    <button className='goToCartBtn'>Go to Cart</button>
+                  ) : (
+                    <button onClick={() => handleAddToCart(item._id)}>
+                      Add to Cart
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );

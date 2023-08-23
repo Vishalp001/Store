@@ -8,6 +8,8 @@ import {useGlobalState} from './store/global.ts';
 import Register from './pages/auth/register/Register';
 import Login from './pages/auth/login/Login';
 import {fetchCartItem} from './services/apis';
+import Wishlist from './pages/wishlist/Wishlist';
+import {Axios} from './Utility';
 const App = () => {
   const state = useGlobalState();
   const user = state.getUser().value;
@@ -29,6 +31,16 @@ const App = () => {
       }
     };
     getCartItems();
+
+    const fetchData = async () => {
+      try {
+        const res = await Axios.get('/product');
+        state.setProduct(res.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
   }, [user]);
 
   return (
@@ -40,6 +52,7 @@ const App = () => {
         {user?.isAdmin && <Route path='/addProduct' element={<AddProduct />} />}
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/wishlist' element={<Wishlist />} />
       </Routes>
     </>
   );

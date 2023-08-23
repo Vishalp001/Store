@@ -9,6 +9,7 @@ const cartRoute = require('./routes/cart');
 const PORT = process.env.PORT || 8080;
 // const PORT = 5000
 const cors = require('cors');
+const Product = require('./models/Product');
 app.use(cors());
 
 app.use(express.static(__dirname));
@@ -20,6 +21,22 @@ mongoose
   .connect(process.env.MONGO_URL)
   .then(console.log('Connected to MongoDB'))
   .catch((err) => console.log(err));
+
+// Update all product Quantity
+// const newStockQuantity = 5; // Replace with the new stock quantity
+// Product.updateMany(
+//   {}, // Empty filter means all documents match
+//   {$set: {stockQuantity: newStockQuantity}}
+// )
+//   .then((result) => {
+//     console.log('Number of products updated:', result.nModified);
+//   })
+//   .catch((error) => {
+//     console.error('Error updating products:', error);
+//   })
+//   .finally(() => {
+//     mongoose.disconnect();
+//   });
 
 app.use('/api/auth', authRoute);
 app.use('/api/product', productRout);

@@ -3,7 +3,7 @@ import './navbar.scss';
 import {Link} from 'react-router-dom';
 import {removeItemsFromLocalStorage} from '../../helpers/common';
 import {useGlobalState} from '../../store/global.ts';
-import {AiOutlineShoppingCart} from 'react-icons/ai';
+import {AiOutlineShoppingCart, AiOutlineHeart} from 'react-icons/ai';
 import Cart from '../cart/Cart';
 import {fetchCartItem} from '../../services/apis';
 const Navbar = () => {
@@ -68,13 +68,23 @@ const Navbar = () => {
               <Link>
                 <span>{user.firstName}</span>
               </Link>
-              <Link onClick={handleLogout}>
-                <span>Logout</span>
+              <Link>
+                <span>Cart</span>
               </Link>
+
+              <Link to='/wishlist'>
+                <span className='cartIcon'>
+                  <AiOutlineHeart />
+                </span>
+              </Link>
+
               <span onClick={openCart} className='cartIcon'>
                 <span className='count'>{cartItems?.length}</span>
                 <AiOutlineShoppingCart />
               </span>
+              <Link onClick={handleLogout}>
+                <span>Logout</span>
+              </Link>
             </>
           ) : (
             <>
