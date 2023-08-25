@@ -16,7 +16,7 @@ const ProductDetails = () => {
 
   // Check produce is present in cart
   const getProduct = state
-    .getApiResponseData()
+    .getcartData()
     .value?.find((item) => item.product === path);
 
   const [liked, setLiked] = useState(false);
@@ -55,7 +55,7 @@ const ProductDetails = () => {
         user: state.getUser().value._id,
       };
       const updatedData = await Axios.post(`/cart`, newItem);
-      state.setApiResponseData((prevData) => [...prevData, updatedData.data]);
+      state.setcartData((prevData) => [...prevData, updatedData.data]);
     }
   };
 

@@ -21,7 +21,7 @@ const Product = ({showProduct}) => {
     // Fetch initial data from the state or wherever it comes from
     const fetchInitialData = async () => {
       try {
-        const initialData = await state.getApiResponseData();
+        const initialData = await state.getcartData();
         setCartItems(initialData.value);
       } catch (error) {
         console.log(error);
@@ -29,7 +29,7 @@ const Product = ({showProduct}) => {
     };
 
     fetchInitialData();
-  }, [state.getApiResponseData().value?.length]);
+  }, [state.getcartData().value?.length]);
 
   const handleAddToCart = async (productID) => {
     if (!isUser) {
@@ -56,9 +56,9 @@ const Product = ({showProduct}) => {
           });
         }
 
-        state.setApiResponseData((prevData) => [...prevData, updatedData.data]);
+        state.setcartData((prevData) => [...prevData, updatedData.data]);
 
-        setCartItems(state.getApiResponseData().value);
+        setCartItems(state.getcartData().value);
       } catch (error) {
         console.log(error);
       }

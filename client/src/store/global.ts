@@ -6,7 +6,7 @@ const initialState: {
   user: {};
   token: string | {};
   isLoggedIn: boolean;
-  apiResponseData: null;
+  cartData: null;
   product: null;
 } = hookstate({
   loader: false,
@@ -31,8 +31,8 @@ export const useGlobalState = () => {
     },
     getUser: () => state.user,
     // Cart
-    getApiResponseData: () => state.apiResponseData,
-    setApiResponseData: (data: any) => state.apiResponseData.set(data),
+    getcartData: () => state.cartData,
+    setcartData: (data: any) => state.cartData.set(data),
 
     //Product
     getProduct: () => state.product,

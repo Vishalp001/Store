@@ -10,6 +10,7 @@ import Login from './pages/auth/login/Login';
 import {fetchCartItem} from './services/apis';
 import Wishlist from './pages/wishlist/Wishlist';
 import {Axios} from './Utility';
+import CartDetails from './pages/cartDetails/CartDetails';
 const App = () => {
   const state = useGlobalState();
   const user = state.getUser().value;
@@ -23,7 +24,7 @@ const App = () => {
           const cartResponse = await fetchCartItem(userId);
           const fetchedCartItems = await cartResponse.data;
 
-          state.setApiResponseData(fetchedCartItems);
+          state.setcartData(fetchedCartItems);
           // setCartItems(fetchedCartItems);
         }
       } catch (error) {
@@ -53,6 +54,7 @@ const App = () => {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/wishlist' element={<Wishlist />} />
+        <Route path='/cart' element={<CartDetails />} />
       </Routes>
     </>
   );

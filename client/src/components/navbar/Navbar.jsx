@@ -36,7 +36,7 @@ const Navbar = () => {
     // Fetch initial data from the state or wherever it comes from
     const fetchInitialData = async () => {
       try {
-        const initialData = await state.getApiResponseData(); // Replace with the correct method to fetch data
+        const initialData = await state.getcartData(); // Replace with the correct method to fetch data
         setCartItems(initialData.value);
       } catch (error) {
         console.log(error);
@@ -44,7 +44,7 @@ const Navbar = () => {
     };
 
     fetchInitialData();
-  }, [state.getApiResponseData().value?.length]);
+  }, [state.getcartData().value?.length]);
 
   return (
     <>
@@ -68,7 +68,7 @@ const Navbar = () => {
               <Link>
                 <span>{user.firstName}</span>
               </Link>
-              <Link>
+              <Link to='/cart'>
                 <span>Cart</span>
               </Link>
 

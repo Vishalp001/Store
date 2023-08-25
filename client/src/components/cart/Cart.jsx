@@ -10,7 +10,7 @@ const Cart = ({handleCloseCart}) => {
   const [productsData, setproductsData] = useState();
   const state = useGlobalState();
 
-  const cartItems = state.getApiResponseData().value;
+  const cartItems = state.getcartData().value;
 
   const priceArray = cartItems.map((item) => item.price);
   console.log(cartItems, 'priceArray');
@@ -51,8 +51,8 @@ const Cart = ({handleCloseCart}) => {
           prevProductsData.filter((product) => product._id !== item._id)
         );
 
-        // After successful deletion, update the setApiResponseData state
-        state.setApiResponseData((prevData) =>
+        // After successful deletion, update the setcartData state
+        state.setcartData((prevData) =>
           prevData.filter((dataItem) => dataItem.product !== productIdToFind)
         );
       } else {
@@ -107,7 +107,7 @@ const Cart = ({handleCloseCart}) => {
 
       const normalData = JSON.parse(JSON.stringify(updatedCartItems));
 
-      state.setApiResponseData(normalData);
+      state.setcartData(normalData);
     } catch (error) {
       console.log(error.message);
     }
