@@ -13,14 +13,12 @@ const Cart = ({handleCloseCart}) => {
   const cartItems = state.getcartData().value;
 
   const priceArray = cartItems.map((item) => item.price);
-  console.log(cartItems, 'priceArray');
 
   let sum = 0;
 
   for (const num of priceArray) {
     sum += num;
   }
-  console.log(sum);
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -145,10 +143,10 @@ const Cart = ({handleCloseCart}) => {
                 </div>
                 <div className='quantity'>
                   <button
-                    className='plus-btn'
-                    onClick={() => updateQuantity(item, 'increment')}>
+                    className='minus-btn'
+                    onClick={() => updateQuantity(item, 'decrement')}>
                     <img
-                      src='https://designmodo.com/demo/shopping-cart/plus.svg'
+                      src='https://designmodo.com/demo/shopping-cart/minus.svg'
                       alt=''
                     />
                   </button>
@@ -159,10 +157,10 @@ const Cart = ({handleCloseCart}) => {
                     readOnly
                   />
                   <button
-                    className='minus-btn'
-                    onClick={() => updateQuantity(item, 'decrement')}>
+                    className='plus-btn'
+                    onClick={() => updateQuantity(item, 'increment')}>
                     <img
-                      src='https://designmodo.com/demo/shopping-cart/minus.svg'
+                      src='https://designmodo.com/demo/shopping-cart/plus.svg'
                       alt=''
                     />
                   </button>
