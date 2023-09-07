@@ -8,6 +8,14 @@ const initialState: {
   isLoggedIn: boolean;
   cartData: null;
   product: null;
+  order: {
+    user: any;
+    products: any[];
+    totalAmount: number;
+    shippingAddress: any;
+    paymentStatus: string;
+    paymentMethod: string;
+  };
 } = hookstate({
   loader: false,
   user: getKeyFromLocalStorage('user'),
@@ -37,5 +45,9 @@ export const useGlobalState = () => {
     //Product
     getProduct: () => state.product,
     setProduct: (data: any) => state.product.set(data),
+
+    // Order
+    getOrder: () => state.order,
+    setOrder: (data: any) => state.order.set(data),
   };
 };

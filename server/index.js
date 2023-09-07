@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const productRout = require('./routes/product');
 const authRoute = require('./routes/auth');
 const cartRoute = require('./routes/cart');
+const userRoute = require('./routes/user');
+const orderRoute = require('./routes/order');
+// const orderRoute = require('./routes/order');
 
 const PORT = process.env.PORT || 8080;
 // const PORT = 5000
@@ -41,6 +44,8 @@ mongoose
 app.use('/api/auth', authRoute);
 app.use('/api/product', productRout);
 app.use('/api/cart', cartRoute);
+app.use('/api/user', userRoute);
+app.use('/api/order', orderRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello to Blog API');

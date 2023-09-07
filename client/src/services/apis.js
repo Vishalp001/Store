@@ -18,3 +18,12 @@ export const udateCartItem = (userId, payload) => {
     body: payload,
   });
 };
+
+// Add Address
+export const addAddressApi = (userId, submitData) => {
+  return APIRequest({
+    url: `${BASEURL}/user/${userId}/addresses`,
+    method: REQUEST_TYPES.POST,
+    body: submitData,
+  });
+};

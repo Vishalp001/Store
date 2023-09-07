@@ -161,7 +161,9 @@ const Product = ({showProduct}) => {
                   {cartItems?.some(
                     (cartItem) => cartItem?.product === item._id
                   ) ? (
-                    <button className='goToCartBtn'>Go to Cart</button>
+                    <Link to='cart'>
+                      <button className='goToCartBtn'>Go to Cart</button>
+                    </Link>
                   ) : (
                     <button onClick={() => handleAddToCart(item._id)}>
                       Add to Cart
