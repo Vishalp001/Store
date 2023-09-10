@@ -43,7 +43,7 @@ const Checkout = () => {
           {/* <div className='stepThree'>Payment Options</div> */}
         </div>
         <div className='colTwo'>
-          <PriceDetails />
+          <PriceDetails cartItems={cartItems} />
         </div>
       </div>
     </>

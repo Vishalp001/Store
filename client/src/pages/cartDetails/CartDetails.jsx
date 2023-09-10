@@ -15,7 +15,7 @@ const CartDetails = () => {
   const cartItems = state.getcartData().value;
   const allProduct = state.getProduct().value;
 
-  console.log(cartItems, 'cartItems');
+  // console.log(cartItems?.length, 'cartItems');
 
   const cartItemId = cartItems?.map((item) => item.product) || [];
 
@@ -123,44 +123,62 @@ const CartDetails = () => {
   return (
     <>
       <div className='cartDetailsContainer'>
-        <div className='cartItems'>
-          {cartProduct?.map((item) => (
-            <div key={item._id} className='cartItem'>
-              <div className='divOne'>
-                <div className='imgDiv'>
-                  <img src={item?.images[0]} alt='' />
+        {cartItems?.length > 0 ? (
+          <>
+            <div className='cartItems'>
+              {cartProduct?.map((item) => (
+                <div key={item._id} className='cartItem'>
+                  <div className='divOne'>
+                    <div className='imgDiv'>
+                      <img src={item?.images[0]} alt='' />
+                    </div>
+                    <h1>{item.productName}</h1>
+                  </div>
+                  <div className='divTwo'>
+                    <p>₹ {item.price}.00</p>
+                  </div>
+                  <div className='divThree'>
+                    <button onClick={() => updateQuantity(item, 'decrement')}>
+                      <MdKeyboardArrowLeft />
+                    </button>
+                    <input
+                      type='text'
+                      value={getCartItemQuantity(item._id)}
+                      readOnly
+                    />
+                    <button onClick={() => updateQuantity(item, 'increment')}>
+                      <MdKeyboardArrowRight />
+                    </button>
+                  </div>
+                  <div className='divFour'>{getSubTotal(item._id)}</div>
+                  <div className='divFive'>
+                    <p
+                      className='crossIocn'
+                      onClick={() => deleteItem(item._id)}>
+                      <RxCross2 />
+                    </p>
+                  </div>
                 </div>
-                <h1>{item.productName}</h1>
-              </div>
-              <div className='divTwo'>
-                <p>₹ {item.price}.00</p>
-              </div>
-              <div className='divThree'>
-                <button onClick={() => updateQuantity(item, 'decrement')}>
-                  <MdKeyboardArrowLeft />
-                </button>
-                <input
-                  type='text'
-                  value={getCartItemQuantity(item._id)}
-                  readOnly
-                />
-                <button onClick={() => updateQuantity(item, 'increment')}>
-                  <MdKeyboardArrowRight />
-                </button>
-              </div>
-              <div className='divFour'>{getSubTotal(item._id)}</div>
-              <div className='divFive'>
-                <p className='crossIocn' onClick={() => deleteItem(item._id)}>
-                  <RxCross2 />
-                </p>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div className='rowTwo'>
-          <PriceDetails cartItems={cartItems} />
-        </div>
+            <div className='rowTwo'>
+              <PriceDetails cartItems={cartItems} />
+            </div>
+          </>
+        ) : (
+          <div className='noItems'>
+            <img
+              src='https://rukminim2.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90'
+              alt=''
+            />
+            <h2>Your cart is empty! </h2>
+            <p>Add items to it now.</p>
+            <Link to='/'>
+              <button>Shop Now</button>
+            </Link>
+          </div>
+        )}
       </div>
     </>
   );

@@ -11,7 +11,7 @@ const OrderSummary = () => {
 
   const [cartProduct, setcartProduct] = useState([]);
 
-  console.log(cartItems);
+  // console.log(cartItems);
 
   useEffect(() => {
     const productInCart = () => {
@@ -57,6 +57,8 @@ const OrderSummary = () => {
     }
   };
 
+  // console.log(, 'cartProduct');
+
   return (
     <>
       <div className='cartContainer'>
@@ -65,31 +67,37 @@ const OrderSummary = () => {
           <span className='heading'>Order Summary</span>
         </div>
         <div className='cartItems'>
-          {cartProduct?.map((item) => (
-            <div className='cartItem' key={item._id}>
-              <div className='colOne'>
-                <div className='producImage'>
-                  <img src={item.images} alt='' />
+          {cartProduct?.length > 0 ? (
+            <>
+              {cartProduct?.map((item) => (
+                <div className='cartItem' key={item._id}>
+                  <div className='colOne'>
+                    <div className='producImage'>
+                      <img src={item.images} alt='' />
+                    </div>
+                    <div className='productDesc'>
+                      <h2>{item.productName}</h2>
+                      <p className='desc'>{item.description}</p>
+                      <p className='price'>
+                        <span>₹</span>
+                        {getSubTotal(item._id)}.00
+                      </p>
+                      <p className='quantity'>
+                        <span>quantity:</span> {getQunatity(item._id)}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    className='removeBtn'
+                    onClick={() => deleteItem(item._id)}>
+                    Remove
+                  </button>
                 </div>
-                <div className='productDesc'>
-                  <h2>{item.productName}</h2>
-                  <p className='desc'>{item.description}</p>
-                  <p className='price'>
-                    <span>₹</span>
-                    {getSubTotal(item._id)}.00
-                  </p>
-                  <p className='quantity'>
-                    <span>quantity:</span> {getQunatity(item._id)}
-                  </p>
-                </div>
-              </div>
-              <button
-                className='removeBtn'
-                onClick={() => deleteItem(item._id)}>
-                Remove
-              </button>
-            </div>
-          ))}
+              ))}
+            </>
+          ) : (
+            <p className='cartItem'> Your checkout has no items.</p>
+          )}
         </div>
       </div>
     </>
