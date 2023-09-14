@@ -13,18 +13,6 @@ const OrderSummary = () => {
 
   // console.log(cartItems);
 
-  useEffect(() => {
-    const productInCart = () => {
-      if (!cartItems || cartItems.length === 0) return;
-      const item = allProduct?.filter((product) =>
-        cartItemId.includes(product._id)
-      );
-      setcartProduct(item);
-    };
-
-    productInCart();
-  }, [cartItems?.length, allProduct?.length]);
-
   const getSubTotal = (productId) => {
     const cartItem = cartItems?.find((item) => item.product === productId);
     return cartItem ? cartItem.price : 0;
@@ -57,7 +45,62 @@ const OrderSummary = () => {
     }
   };
 
-  // console.log(, 'cartProduct');
+  const priceArray = cartItems?.map((item) => item.price) || [];
+  let sum = 0;
+  for (const num of priceArray) {
+    sum += num;
+  }
+
+  useEffect(() => {
+    const productInCart = () => {
+      if (!cartItems || cartItems.length === 0) return;
+      const item = allProduct?.filter((product) =>
+        cartItemId.includes(product._id)
+      );
+      setcartProduct(item);
+    };
+
+    productInCart();
+  }, [cartItems?.length, allProduct?.length]);
+
+  // const normalData = JSON.parse(JSON.stringify(cartProduct));
+
+  // Create a new array with product names
+  const updatedCartItems = cartItems?.map((item) => ({
+    ...item,
+    productName:
+      allProduct?.find((product) => product._id === item.product)
+        ?.productName || 'Product Name Not Found',
+    productPrice:
+      allProduct?.find((product) => product._id === item.product)?.price ||
+      'Product Name Not Found',
+  }));
+
+  // console.log(updatedCartItems);
+
+  const handlePlaceOrder = () => {
+    const currentOrder = state.getOrder().value;
+    state.setOrder({
+      ...currentOrder,
+      userId: state.getUser().value?._id,
+      user:
+        state.getUser().value?.firstName +
+        ' ' +
+        state.getUser().value?.lastName,
+      // products: product,
+      products: updatedCartItems,
+      totalAmount: sum,
+    });
+
+    const setOrderStep = state.getOrderStep().value;
+
+    state.setOrderStep({
+      ...setOrderStep,
+      orderSummary: true,
+    });
+  };
+
+  // console.log(state.getOrder().value, 'Order');
 
   return (
     <>
@@ -94,6 +137,11 @@ const OrderSummary = () => {
                   </button>
                 </div>
               ))}
+              <div className='btnDiv'>
+                <button className='orangeBtn' onClick={handlePlaceOrder}>
+                  Continue
+                </button>
+              </div>
             </>
           ) : (
             <p className='cartItem'> Your checkout has no items.</p>

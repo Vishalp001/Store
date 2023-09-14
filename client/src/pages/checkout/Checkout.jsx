@@ -1,46 +1,37 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './checkout.scss';
 import PriceDetails from '../../components/priceDetails/PriceDetails';
 import Address from '../../components/address/Address';
 import {useGlobalState} from '../../store/global.ts';
 import OrderSummary from '../../components/orderSummary/OrderSummary';
+import Payment from '../../components/payment/Payment';
 const Checkout = () => {
   const state = useGlobalState();
-
   const cartItems = state.getcartData().value;
 
-  const priceArray = cartItems?.map((item) => item.price) || [];
-  let sum = 0;
-  for (const num of priceArray) {
-    sum += num;
-  }
+  console.log(state.getOrderStep().value);
 
-  const handlePlaceOrder = () => {
-    const currentOrder = state.getOrder().value;
-    const normalData = JSON.parse(JSON.stringify(cartItems));
-    state.setOrder({
-      ...currentOrder,
-      user: state.getUser().value?._id,
-      products: normalData,
-      totalAmount: sum,
-      // user:
-    });
-  };
-
-  // console.log(state.getOrder().value, 'Order');
+  const isAddress = state.getOrderStep().value?.address;
+  const isOrderSummary = state.getOrderStep().value?.orderSummary;
 
   return (
     <>
       <div className='checkoutContainer wrapper'>
         <div className='colOne'>
           <div className='stepOne'>
-            <button onClick={handlePlaceOrder}>Place Order</button>
+            {/* <button onClick={handlePlaceOrder}>Place Order</button> */}
             <Address />
           </div>
-          <div className='stepTwo'>
-            <OrderSummary />
-          </div>
-          {/* <div className='stepThree'>Payment Options</div> */}
+          {isAddress && (
+            <div className='stepTwo'>
+              <OrderSummary />
+            </div>
+          )}
+          {isOrderSummary && (
+            <div className='stepThree'>
+              <Payment />
+            </div>
+          )}
         </div>
         <div className='colTwo'>
           <PriceDetails cartItems={cartItems} />

@@ -12,6 +12,8 @@ import Wishlist from './pages/wishlist/Wishlist';
 import {Axios} from './Utility';
 import CartDetails from './pages/cartDetails/CartDetails';
 import Checkout from './pages/checkout/Checkout';
+import Success from './pages/success/Success';
+import Cancle from './pages/cancle/Cancle';
 const App = () => {
   const state = useGlobalState();
   const user = state.getUser().value;
@@ -57,6 +59,8 @@ const App = () => {
         <Route path='/wishlist' element={<Wishlist />} />
         <Route path='/cart' element={<CartDetails />} />
         <Route path='/checkout' element={<Checkout />} />
+        <Route path='/success' element={<Success />} />
+        <Route path='/cancel' element={<Cancle />} />
       </Routes>
     </>
   );

@@ -37,6 +37,12 @@ const Address = () => {
   const selectAddress = (address) => {
     setAllAddress(false);
     setsingleAddress(allAdressValue.filter((item) => item._id === address));
+    const setOrderStep = state.getOrderStep().value;
+
+    state.setOrderStep({
+      ...setOrderStep,
+      address: true,
+    });
   };
 
   // -------------------------------------------

@@ -89,4 +89,20 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// DELETE /cartItems/user/:userId
+router.delete('/user/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Delete all cart items associated with the user's cart
+    await CartItem.deleteMany({user: userId});
+
+    res
+      .status(200)
+      .json({message: 'All cart items for the user deleted successfully.'});
+  } catch (err) {
+    res.status(500).json({error: 'Unable to delete cart items for the user.'});
+  }
+});
+
 module.exports = router;

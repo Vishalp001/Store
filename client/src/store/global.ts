@@ -16,6 +16,11 @@ const initialState: {
     paymentStatus: string;
     paymentMethod: string;
   };
+  orderStep: {
+    address: false;
+    orderSummary: false;
+    payment: false;
+  };
 } = hookstate({
   loader: false,
   user: getKeyFromLocalStorage('user'),
@@ -49,5 +54,9 @@ export const useGlobalState = () => {
     // Order
     getOrder: () => state.order,
     setOrder: (data: any) => state.order.set(data),
+
+    // orderStep
+    getOrderStep: () => state.orderStep,
+    setOrderStep: (data: any) => state.orderStep.set(data),
   };
 };

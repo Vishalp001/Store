@@ -7,6 +7,8 @@ const authRoute = require('./routes/auth');
 const cartRoute = require('./routes/cart');
 const userRoute = require('./routes/user');
 const orderRoute = require('./routes/order');
+const paymentRoute = require('./routes/payment');
+
 // const orderRoute = require('./routes/order');
 
 const PORT = process.env.PORT || 8080;
@@ -46,6 +48,7 @@ app.use('/api/product', productRout);
 app.use('/api/cart', cartRoute);
 app.use('/api/user', userRoute);
 app.use('/api/order', orderRoute);
+app.use('/api/create-checkout-session', paymentRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello to Blog API');
