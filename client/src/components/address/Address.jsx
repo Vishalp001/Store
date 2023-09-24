@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import './address.scss';
-import {useGlobalState} from '../../store/global.ts';
 import {
   MdOutlineRadioButtonUnchecked,
   MdRadioButtonChecked,
@@ -8,6 +7,7 @@ import {
 import {staetArray} from '../../helpers/stateArray';
 import {setKeyToLocalStorage} from '../../helpers/common';
 import {addAddressApi} from '../../services/apis';
+import {useGlobalState} from '../../store/global.ts';
 
 const Address = () => {
   const state = useGlobalState();
@@ -20,7 +20,7 @@ const Address = () => {
   const [isChecked, setisChecked] = useState(null);
   const [addAddress, setAddAddress] = useState(false);
   const handleAddress = (id) => {
-    // state.setOrder({shippingAddress: id});
+    state.setOrder({shippingAddress: id});
     setisChecked(id);
     console.log(id);
   };

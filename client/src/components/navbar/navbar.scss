@@ -28,6 +28,61 @@ body {
   color: #fff;
   height: 60px;
   padding: 0 20px;
+  .nav-options {
+    display: flex;
+    align-items: center;
+    .userName {
+      position: relative;
+      &:hover {
+        .dropdown {
+          display: block;
+        }
+      }
+      .dropdown {
+        position: absolute;
+        top: 19px;
+        padding: 10px;
+        margin: 0;
+        background-color: #fff;
+        border: 1px solid #f0f0f0;
+        min-width: 100px;
+        width: 130px;
+        /* box-shadow: 0 4px 16px 0 rgb(0 0 0/20%); */
+        z-index: 100;
+        display: none;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        a {
+          display: flex;
+          flex-direction: column;
+          color: #000;
+          text-align: left;
+          padding-bottom: 10px;
+        }
+      }
+    }
+    .cartIcon {
+      margin-left: 20px;
+      height: 32px;
+      font-size: 26px;
+      cursor: pointer;
+      position: relative;
+      .count {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        background-color: #fff;
+        color: #000;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 12px;
+        top: -10px;
+        line-height: 1.8;
+        right: -15px;
+      }
+    }
+  }
 }
 
 .logo {
@@ -44,37 +99,9 @@ body {
   // }
 }
 
-.nav-options a {
+.nav-options .option {
   color: #fff;
   text-decoration: none;
   margin-left: 20px;
-}
-
-.nav-options a:first-child {
-  margin-left: 0;
-}
-.nav-options {
-  display: flex;
-  align-items: center;
-  .cartIcon {
-    margin-left: 20px;
-    height: 32px;
-    font-size: 26px;
-    cursor: pointer;
-    position: relative;
-    .count {
-      display: flex;
-      justify-content: center;
-      position: absolute;
-      background-color: #fff;
-      color: #000;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      font-size: 12px;
-      top: -10px;
-      line-height: 1.8;
-      right: -15px;
-    }
-  }
+  cursor: pointer;
 }

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './orderSummary.scss';
 import {useGlobalState} from '../../store/global.ts';
 import {Axios} from '../../Utility';
+import {setKeyToLocalStorage} from '../../helpers/common';
 
 const OrderSummary = () => {
   const state = useGlobalState();
@@ -92,6 +93,8 @@ const OrderSummary = () => {
       totalAmount: sum,
     });
 
+    setKeyToLocalStorage('orderData', state.getOrder().value);
+
     const setOrderStep = state.getOrderStep().value;
 
     state.setOrderStep({
@@ -100,7 +103,7 @@ const OrderSummary = () => {
     });
   };
 
-  // console.log(state.getOrder().value, 'Order');
+  console.log(state.getOrder().value, 'Order');
 
   return (
     <>

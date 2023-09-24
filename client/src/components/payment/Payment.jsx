@@ -3,30 +3,24 @@ import './payment.scss';
 import {loadStripe} from '@stripe/stripe-js';
 import {useGlobalState} from '../../store/global.ts';
 import {Axios} from '../../Utility';
-// import {stat} from 'fs';
+import {
+  getKeyFromLocalStorage,
+  setKeyToLocalStorage,
+} from '../../helpers/common';
 
 const Payment = () => {
+  const state = useGlobalState();
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleRadioChange = (option) => {
     setSelectedOption(option);
   };
 
-  const state = useGlobalState();
-  const orderData = state.getOrder().value;
-
-  let orderState;
-  if (orderData !== undefined) {
-    const normalData = JSON.parse(JSON.stringify(orderData));
-    orderState = normalData;
-    console.log(normalData, 'orderState');
-  }
-
   const makePayment = async () => {
     const stripe = await loadStripe(
       'pk_test_51NpFpYSEKxyQ7sG7WKXbgvfJjoZ0C2aHmWW0QCChxo8b9HCf9FZQnYr7JUMVugKITSpbkeJHymT6rf6k9OCaQx7j00Epx0iiUk'
     );
-    const body = orderState;
+    const body = getKeyFromLocalStorage('orderData');
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -48,6 +42,8 @@ const Payment = () => {
       console.log(result.error);
     }
   };
+
+  // console.log(orderState, 'orderState');
 
   return (
     <div className='cartContainer payemntDiv'>

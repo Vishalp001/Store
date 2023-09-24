@@ -9,7 +9,7 @@ const Checkout = () => {
   const state = useGlobalState();
   const cartItems = state.getcartData().value;
 
-  console.log(state.getOrderStep().value);
+  // console.log(state.getOrderStep().value);
 
   const isAddress = state.getOrderStep().value?.address;
   const isOrderSummary = state.getOrderStep().value?.orderSummary;

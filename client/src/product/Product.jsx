@@ -17,6 +17,10 @@ const Product = ({showProduct}) => {
 
   const [cartItems, setCartItems] = useState([]);
 
+  const orderData = state.getOrder().value;
+
+  console.log(orderData, 'orderData in product page');
+
   useEffect(() => {
     // Fetch initial data from the state or wherever it comes from
     const fetchInitialData = async () => {

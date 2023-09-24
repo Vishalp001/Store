@@ -14,6 +14,7 @@ import CartDetails from './pages/cartDetails/CartDetails';
 import Checkout from './pages/checkout/Checkout';
 import Success from './pages/success/Success';
 import Cancle from './pages/cancle/Cancle';
+import Orders from './pages/orders/Orders';
 const App = () => {
   const state = useGlobalState();
   const user = state.getUser().value;
@@ -61,6 +62,7 @@ const App = () => {
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/success' element={<Success />} />
         <Route path='/cancel' element={<Cancle />} />
+        <Route path='/orders' element={<Orders />} />
       </Routes>
     </>
   );

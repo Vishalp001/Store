@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema(
   {
-    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    user: {
+      type: String,
+    },
     products: [
       {
         product: {
@@ -12,6 +15,7 @@ const orderSchema = new mongoose.Schema(
         },
         quantity: {type: Number, required: true},
         price: {type: Number, required: true},
+        productName: {type: String},
       },
     ],
     totalAmount: {type: Number, required: true},
@@ -27,7 +31,7 @@ const orderSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ['Credit Card', 'Debit Card', 'PayPal', 'Cash on Delivery'],
+      enum: ['Card', 'Cash on Delivery'],
       required: true,
     },
     paymentStatus: {

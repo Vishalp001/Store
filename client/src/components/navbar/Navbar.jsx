@@ -15,7 +15,7 @@ const Navbar = () => {
   const [isCartOpen, setisCartOpen] = useState(false);
 
   const isLoggedIn = state.getisLoggedIn().value;
-  const keysToRemove = ['user'];
+  const keysToRemove = ['user', 'orderData'];
   const handleLogout = () => {
     state.setisLoggedIn(false);
     state.setUser({});
@@ -55,41 +55,67 @@ const Navbar = () => {
       <nav className='navbar'>
         <div className='logo'>
           {/* <img src={logo} alt='' /> */}
-          <Link to='/'>
-            <h2>DD</h2>
-          </Link>
+          <div className='option'>
+            <Link to='/'>
+              <h2>DD</h2>
+            </Link>
+          </div>
         </div>
         <div className='nav-options'>
-          <Link to='/'>Home</Link>
+          <div className='option'>
+            <Link to='/'>Home</Link>
+          </div>
 
           {isLoggedIn ? (
             <>
-              {user?.isAdmin ? <Link to='/addProduct'>Add Product</Link> : ''}
-              <Link>
-                <span>{user.firstName}</span>
-              </Link>
-              <Link to='/cart'>
-                <span>Cart</span>
-              </Link>
+              {user?.isAdmin ? (
+                <div className='option'>
+                  <Link to='/addProduct'>Add Product</Link>
+                </div>
+              ) : (
+                ''
+              )}
 
-              <Link to='/wishlist'>
-                <span className='cartIcon'>
-                  <AiOutlineHeart />
-                </span>
-              </Link>
+              <div className='userName option'>
+                <span>{user.firstName}</span>
+                <div className='dropdown'>
+                  <Link>My Profile</Link>
+                  <Link to='/orders'>Order</Link>
+                  <Link>Wishlist</Link>
+                </div>
+              </div>
+
+              <div className='option'>
+                <Link to='/cart'>
+                  <span>Cart</span>
+                </Link>
+              </div>
+              <div className='option'>
+                <Link to='/wishlist'>
+                  <span className='cartIcon'>
+                    <AiOutlineHeart />
+                  </span>
+                </Link>
+              </div>
 
               <span onClick={openCart} className='cartIcon'>
                 <span className='count'>{cartItems?.length}</span>
                 <AiOutlineShoppingCart />
               </span>
-              <Link onClick={handleLogout}>
-                <span>Logout</span>
-              </Link>
+              <div className='option'>
+                <Link onClick={handleLogout}>
+                  <span>Logout</span>
+                </Link>
+              </div>
             </>
           ) : (
             <>
-              <Link to='/login'>Login</Link>
-              <Link to='/register'>Signup</Link>
+              <div className='option'>
+                <Link to='/login'>Login</Link>
+              </div>
+              <div className='option'>
+                <Link to='/register'>Signup</Link>
+              </div>
             </>
           )}
         </div>

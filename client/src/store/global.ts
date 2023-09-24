@@ -23,6 +23,7 @@ const initialState: {
   };
 } = hookstate({
   loader: false,
+  order: getKeyFromLocalStorage('orderData') || null,
   user: getKeyFromLocalStorage('user'),
   // token: getKeyFromLocalStorage('jwt'),
   isLoggedIn: getKeyFromLocalStorage('user') ? true : false,
